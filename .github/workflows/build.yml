@@ -1,0 +1,85 @@
+name: Build Executable
+
+on:
+  push:
+    branches:
+      - build
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.12
+
+      - name: Install Dependencies
+        run: python -m pip install -r app/requirements.txt
+
+      - name: Build Executable
+        run: |
+          cd app/
+          pyinstaller -F main.py --paths=config --paths=objects --distpath=../dist --icon=../build/icon.ico --version-file=../build/version.txt
+          cd ..
+          tar -czvf dist.tar.gz dist
+
+      - name: Create Release
+        id: create_release
+        # uses: actions/create-release@v1
+        uses: ./.github/workflows/modules/deploy_release/
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+        with:
+          tag_name: v0.0.1
+          release_name: Release 0.0.1
+          body_path: ./build/release_notes.txt
+          draft: true
+          prerelease: true
+
+
+      - name: Upload Release Asset
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          # upload_url: ${{ steps.create_release.outputs.upload_url }}  # Get the upload URL from the create release step
+          upload_url: ${{ steps.create_release.outputs.upload_url }}  # Get the upload URL from the create release step
+          asset_path: dist.tar.gz  # Path to the built executable
+          asset_name: WineCataloger.tar.gz  # Name of the asset in the release
+          asset_content_type: application/octet-stream
+
+      # - name: test-Release
+      #   uses: softprops/action-gh-release@v2
+      #   if: startsWith(github.ref, 'refs/tags/')
+      #   with:
+      #     files: |
+      #       Release.txt
+      #       LICENSE
+  # build_mac:
+  #   runs-on: macos-latest
+
+  #   steps:
+  #     - name: Checkout Repository
+  #       uses: actions/checkout@v4
+
+  #     - name: Set up Python
+  #       uses: actions/setup-python@v2
+  #       with:
+  #         python-version: 3.12
+
+  #     - name: Install Dependencies
+  #       run: pip install pyinstaller
+
+  #     - name: Build Executable
+  #       run: |
+  #         pyinstaller --onefile app/main.py
+  #         mv dist/main /path/to/your/builds/
+
+  #     - name: Publish Build
+  #       run: echo "Publish build to your desired platform"

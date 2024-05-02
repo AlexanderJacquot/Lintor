@@ -6,6 +6,7 @@ TODO:
 
         - Consle Overview of problems ?
         - Can look at configured rules for language
+            - Worded explanations for rule and link to documentation
 
     - Make custom github action and deploy to marketpalce
     - Make lintor be able to lint other languages
@@ -13,3 +14,7 @@ TODO:
 
     - Provide dialect choices for languages
         - eg: bigquery for sql
+    
+    - Make sure to include new line inserts if need on case when for example
+
+    - create CLI as well
