@@ -1,0 +1,15 @@
+TODO:
+    - Open program:
+        - Choose language to lint
+        - Choose flavor
+        - Choose path or file
+
+        - Consle Overview of problems ?
+        - Can look at configured rules for language
+
+    - Make custom github action and deploy to marketpalce
+    - Make lintor be able to lint other languages
+        - python
+
+    - Provide dialect choices for languages
+        - eg: bigquery for sql
