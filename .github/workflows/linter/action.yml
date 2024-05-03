@@ -1,0 +1,63 @@
+name: 'SQL Linting'
+description: 'Run SQLFluff to lint SQL files'
+
+inputs:
+  directory:
+    description: 'Directory containing SQL files to lint'
+    required: true
+    default: 'dir/'
+
+  language:
+    description: 'Programing language to lint. Possible choice are: SQL, Python'
+    required: true
+
+  dialect:
+    description: 'SQL dialect to use for linting'
+    required: false
+
+  config:
+    description: 'Path to SQLFluff configuration file'
+    required: false
+
+outputs:
+  output:
+    description: 'Output from SQLFluff'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: 3.12
+
+    - name: Validate Language Input
+        run: |
+          if [[ "${{ inputs.language }}" != "SQL" && "${{ inputs.language }}" != "Python" ]]; then
+            echo "Error: Unsupported language '${{ inputs.language }}'. Only 'SQL' or 'Python' are allowed."
+            exit 1
+          fi
+        shell: bash
+
+    - name: Setup Environment
+      run: echo "Setting up for ${{ inputs.language }} with ${INPUT_DIALECT:=default}"
+      shell: bash
+
+    - name: Lint SQL
+      if: ${{ inputs.language == 'SQL' }}
+      run: |
+        echo "Linting SQL with dialect ${{ inputs.dialect || 'default' }}"
+        pip install sqlfluff==3.0.1
+        sqlfluff lint ${{ inputs.directory }} --dialect ${{ inputs.dialect }} --config ${{ inputs.config }}
+      shell: bash
+
+    - name: Lint Python
+      if: ${{ inputs.language == 'Python' }}
+      run: |
+        echo "Linting Python"
+        pip install flake8==7.0.0
+        python -m flake8 ${{ inputs.directory }}
+      shell: bash
