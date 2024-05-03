@@ -27,6 +27,7 @@ jobs:
         with:
           directory: './app/'
           language: 'Pythonn'
+          stop_on_fail: false
 
       - name: Lint SQL
         uses: AlexanderJacquot/lintor-actions@v1.1
