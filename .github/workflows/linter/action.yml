@@ -19,6 +19,11 @@ inputs:
     description: 'Path to SQLFluff configuration file'
     required: false
 
+  stop_on_fail:
+    description: 'Stop workflow on linting failure'
+    required: true
+    default: true
+
 outputs:
   output:
     description: 'Output from SQLFluff'
@@ -53,6 +58,13 @@ runs:
         echo "Linting SQL with dialect ${{ inputs.dialect || 'default' }}"
         pip install sqlfluff==3.0.1
         sqlfluff lint ${{ inputs.directory }} --dialect ${{ inputs.dialect }} --config ${{ inputs.config }}
+        SQLFLUFF_EXIT_CODE=$?
+        if [ "$SQLFLUFF_EXIT_CODE" != "0" ]; then
+          echo "SQLFluff found issues."
+          if [ "${{ inputs.stop_on_fail }}" == "true" ]; then
+            exit 1
+          fi
+        fi
       shell: bash
 
     - name: Lint Python
@@ -61,4 +73,11 @@ runs:
         echo "Linting Python"
         pip install flake8==7.0.0
         python -m flake8 ${{ inputs.directory }}
+        FLAKE8_EXIT_CODE=$?
+        if [ "$FLAKE8_EXIT_CODE" != "0" ]; then
+          echo "Flake8 found issues."
+          if [ "${{ inputs.stop_on_fail }}" == "true" ]; then
+            exit 1
+          fi
+        fi
       shell: bash
