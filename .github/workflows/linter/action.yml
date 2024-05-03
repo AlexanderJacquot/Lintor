@@ -29,7 +29,8 @@ runs:
         python-version: 3.12
 
     - name: Install SQLFluff
-      run: pip install sqlfluff
+      run: pip install sqlfluff==3.0.1
+      shell: bash
 
     - name: Lint SQL Files
       run: sqlfluff lint --dialect ${{ inputs.dialect }} --config ${{ inputs.config }} ${{ inputs.directory }}
