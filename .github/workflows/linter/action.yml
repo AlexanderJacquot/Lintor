@@ -32,10 +32,6 @@ runs:
       run: pip install sqlfluff==3.0.1
       shell: bash
 
-    - name: Debug
-      run: ls -a
-      shell: bash
-
     - name: Lint SQL Files
       run: sqlfluff lint ${{ inputs.directory }} --dialect ${{ inputs.dialect }} --config ${{ inputs.config }}
       shell: bash
