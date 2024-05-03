@@ -24,9 +24,31 @@ jobs:
       - name: Build Executable
         run: |
           cd app/
-          pyinstaller -F main.py --paths=config --paths=objects --distpath=../dist --icon=../build/icon.ico --version-file=../build/version.txt
+          pyinstaller -F main.py --distpath=../dist/win --icon=../build/icon.ico --version-file=../build/version.txt
+          cd ..
+
+  build_mac:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.12
+
+      - name: Install Dependencies
+        run: pip install pyinstaller
+
+      - name: Build Executable
+        run: |
+          cd app/
+          pyinstaller -F main.py --distpath=../dist/macos --icon=../build/icon.ico --version-file=../build/version.txt
           cd ..
           tar -czvf dist.tar.gz dist
+
 
       - name: Create Release
         id: create_release
@@ -48,38 +70,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          # upload_url: ${{ steps.create_release.outputs.upload_url }}  # Get the upload URL from the create release step
           upload_url: ${{ steps.create_release.outputs.upload_url }}  # Get the upload URL from the create release step
           asset_path: dist.tar.gz  # Path to the built executable
           asset_name: WineCataloger.tar.gz  # Name of the asset in the release
           asset_content_type: application/octet-stream
-
-      # - name: test-Release
-      #   uses: softprops/action-gh-release@v2
-      #   if: startsWith(github.ref, 'refs/tags/')
-      #   with:
-      #     files: |
-      #       Release.txt
-      #       LICENSE
-  # build_mac:
-  #   runs-on: macos-latest
-
-  #   steps:
-  #     - name: Checkout Repository
-  #       uses: actions/checkout@v4
-
-  #     - name: Set up Python
-  #       uses: actions/setup-python@v2
-  #       with:
-  #         python-version: 3.12
-
-  #     - name: Install Dependencies
-  #       run: pip install pyinstaller
-
-  #     - name: Build Executable
-  #       run: |
-  #         pyinstaller --onefile app/main.py
-  #         mv dist/main /path/to/your/builds/
-
-  #     - name: Publish Build
-  #       run: echo "Publish build to your desired platform"
