@@ -28,7 +28,7 @@ jobs:
         with:
           directory: './app/'
           language: 'Python'
-          stop_on_fail: false
+          stop_on_fail: 'false'
 
       - name: Lint wrong
         # uses: AlexanderJacquot/lintor-actions@v1.1

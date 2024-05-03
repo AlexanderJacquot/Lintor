@@ -22,7 +22,7 @@ inputs:
   stop_on_fail:
     description: 'Stop workflow on linting failure'
     required: true
-    default: true
+    default: 'true'
 
 outputs:
   output:
@@ -75,6 +75,7 @@ runs:
         pip install flake8==7.0.0
         python -m flake8 ${{ inputs.directory }}
         FLAKE8_EXIT_CODE=$?
+        echo $FLAKE8_EXIT_CODE
         if [ "$FLAKE8_EXIT_CODE" != "0" ]; then
           echo "Flake8 found issues."
           echo ${{ inputs.stop_on_fail }}
