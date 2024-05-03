@@ -30,7 +30,7 @@ jobs:
       #     language: 'Pythonn'
 
       - name: Lint SQL
-        uses: AlexanderJacquot/lintor-actions@v1.5
+        uses: AlexanderJacquot/lintor-actions@v1.6
         # uses: ./.github/workflows/linter
         with:
           directory: './sql/'
