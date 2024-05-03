@@ -13,6 +13,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+
       # - name: Lint Python
       #   # uses: AlexanderJacquot/lintor-actions@v1.1
       #   uses: ./.github/workflows/linter
@@ -29,7 +30,7 @@ jobs:
       #     language: 'Pythonn'
 
       - name: Lint SQL
-        uses: AlexanderJacquot/lintor-actions@v1.4
+        uses: AlexanderJacquot/lintor-actions@v1.5
         # uses: ./.github/workflows/linter
         with:
           directory: './sql/'
