@@ -34,17 +34,17 @@ runs:
       with:
         python-version: 3.12
 
-    - name: Validate Language Input
-        run: |
-          if [[ "${{ inputs.language }}" != "SQL" && "${{ inputs.language }}" != "Python" ]]; then
-            echo "Error: Unsupported language '${{ inputs.language }}'. Only 'SQL' or 'Python' are allowed."
-            exit 1
-          fi
-        shell: bash
+    # - name: Validate Language Input
+    #     run: |
+    #       if [[ "${{ inputs.language }}" != "SQL" && "${{ inputs.language }}" != "Python" ]]; then
+    #         echo "Error: Unsupported language '${{ inputs.language }}'. Only 'SQL' or 'Python' are allowed."
+    #         exit 1
+    #       fi
+    #     shell: bash
 
-    # - name: Setup Environment
-    #   run: echo "Setting up for ${{ inputs.language }} with ${INPUT_DIALECT:=default}"
-    #   shell: bash
+    - name: Setup Environment
+      run: echo "Setting up for ${{ inputs.language }}
+      shell: bash
 
     # - name: Lint SQL
     #   if: ${{ inputs.language == 'SQL' }}
