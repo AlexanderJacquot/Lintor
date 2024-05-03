@@ -61,6 +61,7 @@ runs:
         SQLFLUFF_EXIT_CODE=$?
         if [ "$SQLFLUFF_EXIT_CODE" != "0" ]; then
           echo "SQLFluff found issues."
+          echo ${{ inputs.stop_on_fail }}
           if [ ${{ inputs.stop_on_fail }} == true ]; then
             exit 1
           fi
@@ -76,6 +77,7 @@ runs:
         FLAKE8_EXIT_CODE=$?
         if [ "$FLAKE8_EXIT_CODE" != "0" ]; then
           echo "Flake8 found issues."
+          echo ${{ inputs.stop_on_fail }}
           if [ ${{ inputs.stop_on_fail }} == true ]; then
             exit 1
           fi
