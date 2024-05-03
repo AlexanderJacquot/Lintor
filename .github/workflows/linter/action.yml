@@ -18,7 +18,7 @@ inputs:
   config:
     description: 'Path to SQLFluff configuration file'
     required: false
-    default: '.github/config/.sqlfluff'
+    default: 'config/.sqlfluff'
 
   stop_on_fail:
     description: 'Stop workflow on linting failure'
@@ -52,6 +52,7 @@ runs:
     - name: Lint SQL
       if: ${{ inputs.language == 'SQL' }}
       run: |
+        echo ${{ inputs.config }}
         echo "Linting SQL with dialect ${{ inputs.dialect || 'default' }}"
         pip install sqlfluff==3.0.1
         sqlfluff lint ${{ inputs.directory }} --dialect ${{ inputs.dialect }} --config ${{ inputs.config }} ||
