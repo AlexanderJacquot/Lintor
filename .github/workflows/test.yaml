@@ -14,26 +14,27 @@ jobs:
         uses: actions/checkout@v4
 
 
-      # - name: Lint Python
-      #   # uses: AlexanderJacquot/lintor-actions@v1.1
-      #   uses: ./.github/workflows/linter
-      #   with:
-      #     directory: './app/'
-      #     language: 'Python'
-      #     stop_on_fail: false
-
-      # - name: Lint wrong
-      #   # uses: AlexanderJacquot/lintor-actions@v1.1
-      #   uses: ./.github/workflows/linter
-      #   with:
-      #     directory: './app/'
-      #     language: 'Pythonn'
+      - name: Lint Python
+        uses: AlexanderJacquot/lintor-actions@v1.8
+        # uses: ./.github/workflows/linter
+        with:
+          directory: './app/'
+          language: 'Python'
+          stop_on_fail: false
 
       - name: Lint SQL
-        uses: AlexanderJacquot/lintor-actions@v1.7
+        uses: AlexanderJacquot/lintor-actions@v1.8
         # uses: ./.github/workflows/linter
         with:
           directory: './sql/'
           language: 'SQL'
           dialect: 'bigquery'
           # config: '.sqlfluff'
+          stop_on_fail: true
+
+      - name: Lint wrong
+        uses: AlexanderJacquot/lintor-actions@v1.8
+        # uses: ./.github/workflows/linter
+        with:
+          directory: './app/'
+          language: 'Pythonn'
