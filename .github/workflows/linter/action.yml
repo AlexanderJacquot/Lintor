@@ -47,18 +47,18 @@ runs:
       run: echo "Setting up for ${{ inputs.language }}"
       shell: bash
 
-    # - name: Lint SQL
-    #   if: ${{ inputs.language == 'SQL' }}
-    #   run: |
-    #     echo "Linting SQL with dialect ${{ inputs.dialect || 'default' }}"
-    #     pip install sqlfluff==3.0.1
-    #     sqlfluff lint ${{ inputs.directory }} --dialect ${{ inputs.dialect }} --config ${{ inputs.config }}
-    #   shell: bash
+    - name: Lint SQL
+      if: ${{ inputs.language == 'SQL' }}
+      run: |
+        echo "Linting SQL with dialect ${{ inputs.dialect || 'default' }}"
+        pip install sqlfluff==3.0.1
+        sqlfluff lint ${{ inputs.directory }} --dialect ${{ inputs.dialect }} --config ${{ inputs.config }}
+      shell: bash
 
-    # - name: Lint Python
-    #   if: ${{ inputs.language == 'Python' }}
-    #   run: |
-    #     echo "Linting Python"
-    #     pip install flake8==7.0.0
-    #     python -m flake8 ${{ inputs.directory }}
-    #   shell: bash
+    - name: Lint Python
+      if: ${{ inputs.language == 'Python' }}
+      run: |
+        echo "Linting Python"
+        pip install flake8==7.0.0
+        python -m flake8 ${{ inputs.directory }}
+      shell: bash
