@@ -22,7 +22,7 @@ inputs:
   stop_on_fail:
     description: 'Stop workflow on linting failure'
     required: true
-    default: 'true'
+    default: true
 
 outputs:
   output:
@@ -57,14 +57,9 @@ runs:
       run: |
         echo "Linting SQL with dialect ${{ inputs.dialect || 'default' }}"
         pip install sqlfluff==3.0.1
-        sqlfluff lint ${{ inputs.directory }} --dialect ${{ inputs.dialect }} --config ${{ inputs.config }}
-        SQLFLUFF_EXIT_CODE=$?
-        if [ "$SQLFLUFF_EXIT_CODE" != "0" ]; then
-          echo "SQLFluff found issues."
-          echo ${{ inputs.stop_on_fail }}
-          if [ ${{ inputs.stop_on_fail }} == true ]; then
-            exit 1
-          fi
+        sqlfluff lint ${{ inputs.directory }} --dialect ${{ inputs.dialect }} --config ${{ inputs.config }} ||
+        if [ ${{ inputs.stop_on_fail }} == true ]; then  # This still needs to be a meaningful condition
+          exit 1
         fi
       shell: bash
 
@@ -73,15 +68,8 @@ runs:
       run: |
         echo "Linting Python"
         pip install flake8==7.0.0
-        python3 -m flake8 './app' || true
-
-        FLAKE8_EXIT_CODE=$?
-        if [ $FLAKE8_EXIT_CODE -eq 0 ]; then
-          echo "No linting issues found."
-        else
-          echo "Linting issues found."
-          if [ "false" == "true" ]; then  # This still needs to be a meaningful condition
-            exit 1
-          fi
+        python3 -m flake8 './app' ||
+        if [ ${{ inputs.stop_on_fail }} == true ]; then  # This still needs to be a meaningful condition
+          exit 1
         fi
       shell: bash

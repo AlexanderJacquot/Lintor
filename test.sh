@@ -1,12 +1,9 @@
 #! /bin/bash
 
 echo "Linting Python"
-if [ python3 -m flake8 './app' ]; then
-  echo "Nothing";
-else
-  if [ false == true ]; then
-    exit 1
-  fi
+python3 -m flake8 './app' ||
+if [ "true" == "true" ]; then  # This still needs to be a meaningful condition
+  exit 1
 fi
 
 echo 'Hello'
