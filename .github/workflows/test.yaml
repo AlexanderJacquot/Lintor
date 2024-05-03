@@ -14,9 +14,10 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Lint SQL
-        # uses: your-username/sql-lint-action@v1
-        uses: ./.github/workflows/linter
+        uses: AlexanderJacquot/lintor-actions@v1
+        # uses: ./.github/workflows/linter
         with:
           directory: './sql/'
-          dialect: 'ainsi'
+          language: 'SQL'
+          dialect: 'bigquery'
           config: '.sqlfluff'
