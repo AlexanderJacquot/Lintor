@@ -73,8 +73,8 @@ runs:
       run: |
         echo "Linting Python"
         pip install flake8==7.0.0
-        if [
-          python -m flake8 ${{ inputs.directory }}]; then
+        if [ \
+          python -m flake8 ${{ inputs.directory }} ]; then
           echo "Nothing";
         else
           if [ ${{ inputs.stop_on_fail }} == true ]; then
