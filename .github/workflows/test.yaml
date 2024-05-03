@@ -17,6 +17,6 @@ jobs:
         # uses: your-username/sql-lint-action@v1
         uses: ./.github/workflows/linter
         with:
-          directory: 'sql/'
+          directory: './sql/'
           dialect: 'bigquery'
           config: '.sqlfluff'
