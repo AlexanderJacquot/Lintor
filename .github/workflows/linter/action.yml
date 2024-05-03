@@ -1,5 +1,5 @@
-name: 'SQL Linting'
-description: 'Run SQLFluff to lint SQL files'
+name: 'Lintor'
+description: 'Run linting on chosen language according to Cloud Factory best practices'
 
 inputs:
   directory:
@@ -18,15 +18,12 @@ inputs:
   config:
     description: 'Path to SQLFluff configuration file'
     required: false
+    default: '.github/config/.sqlfluff'
 
   stop_on_fail:
     description: 'Stop workflow on linting failure'
     required: true
     default: true
-
-outputs:
-  output:
-    description: 'Output from SQLFluff'
 
 runs:
   using: 'composite'
@@ -58,7 +55,7 @@ runs:
         echo "Linting SQL with dialect ${{ inputs.dialect || 'default' }}"
         pip install sqlfluff==3.0.1
         sqlfluff lint ${{ inputs.directory }} --dialect ${{ inputs.dialect }} --config ${{ inputs.config }} ||
-        if [ ${{ inputs.stop_on_fail }} == true ]; then  # This still needs to be a meaningful condition
+        if [ ${{ inputs.stop_on_fail }} == true ]; then
           exit 1
         fi
       shell: bash
@@ -69,7 +66,7 @@ runs:
         echo "Linting Python"
         pip install flake8==7.0.0
         python3 -m flake8 './app' ||
-        if [ ${{ inputs.stop_on_fail }} == true ]; then  # This still needs to be a meaningful condition
+        if [ ${{ inputs.stop_on_fail }} == true ]; then
           exit 1
         fi
       shell: bash
