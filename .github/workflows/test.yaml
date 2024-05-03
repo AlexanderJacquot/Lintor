@@ -1,0 +1,22 @@
+name: Lint SQL Workflow
+
+on:
+  push:
+    branches:
+      - main
+      - master
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Lint SQL
+        # uses: your-username/sql-lint-action@v1
+        uses: ./.github/workflows/
+        with:
+          directory: 'sql/'
+          dialect: 'bigquery'
+          config: '.sqlfluff'
