@@ -33,5 +33,5 @@ runs:
       shell: bash
 
     - name: Lint SQL Files
-      run: sqlfluff lint --dialect ${{ inputs.dialect }} --config ${{ inputs.config }} ${{ inputs.directory }}
+      run: sqlfluff lint ${{ inputs.directory }} --dialect ${{ inputs.dialect }} --config ${{ inputs.config }}
       shell: bash
