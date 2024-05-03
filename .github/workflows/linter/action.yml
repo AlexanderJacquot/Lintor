@@ -71,18 +71,15 @@ runs:
     - name: Lint Python
       if: ${{ inputs.language == 'Python' }}
       run: |
-        {
-          echo "Linting Python"
-          pip install flake8==7.0.0
-          python -m flake8 ${{ inputs.directory }}
-        } || {
-          FLAKE8_EXIT_CODE=$?
-          echo $FLAKE8_EXIT_CODE
-          if [ "$FLAKE8_EXIT_CODE" != "0" ]; then
-            echo "Flake8 found issues."
-            echo ${{ inputs.stop_on_fail }}
-            if [ ${{ inputs.stop_on_fail }} == true ]; then
-              exit 1
-            fi
-        }
+        echo "Linting Python"
+        pip install flake8==7.0.0
+        @if \
+          python -m flake8 ${{ inputs.directory }} ; \
+        then \
+          echo "Nothing"; \
+        else \
+          if [ ${{ inputs.stop_on_fail }} == true ]; then
+            exit 1
+          fi
+        fi
       shell: bash
