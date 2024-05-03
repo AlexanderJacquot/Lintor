@@ -23,8 +23,8 @@ jobs:
       #     config: '.sqlfluff'
 
       - name: Lint Python
-        uses: AlexanderJacquot/lintor-actions@v1.1
-        # uses: ./.github/workflows/linter
+        # uses: AlexanderJacquot/lintor-actions@v1.1
+        uses: ./.github/workflows/linter
         with:
           directory: './app/'
           language: 'Python'
