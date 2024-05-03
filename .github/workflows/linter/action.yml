@@ -35,12 +35,17 @@ runs:
         python-version: 3.12
 
     - name: Validate Language Input
-        run: |
-          if [[ ${{ inputs.language }} != "SQL" && ${{ inputs.language }} != "Python" ]]; then
-            echo "Error: Unsupported language ${{ inputs.language }}. Only 'SQL' or 'Python' are allowed."
+      run: |
+        language="${{ inputs.language }}"
+        if [[ "$language" != "SQL" && "$language" != "Python" ]]; then
+            echo "Error: Unsupported language $language. Only 'SQL' or 'Python' are allowed."
             exit 1
-          fi
-        shell: bash
+        fi
+      shell: bash
+
+    - name: Setup Environment
+      run: echo "Setting up for ${{ inputs.language }}"
+      shell: bash
 
     # - name: Lint SQL
     #   if: ${{ inputs.language == 'SQL' }}
