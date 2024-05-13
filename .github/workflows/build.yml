@@ -26,6 +26,7 @@ jobs:
           cd app/
           pyinstaller -F main.py --distpath=../dist/win --icon=../build/icon.ico --version-file=../build/version.txt
           cd ..
+          tar -czvf dist.tar.gz dist
 
       - name: Create Release
         id: create_release
