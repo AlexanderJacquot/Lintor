@@ -53,7 +53,7 @@ FROM EMPLOYEE_ANNUAL
 INNER JOIN GEOGRAPHIC
     ON
         GEOGRAPHIC.user_id = EMPLOYEE_ANNUAL.employee_id
-        AND EMPLOYEE_ANNUAL.effective_date >= CAST(GEOGRAPHIC.export_datetime AS DATE)
+        AND EMPLOYEE_ANNUAL.effective_date >= CAST(GEOGRAPHIC.export_datetime as DATE)
 WHERE
     professional_category_surrogate_key IN
     (

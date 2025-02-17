@@ -1,6 +1,10 @@
 name: Lint SQL Workflow
 
 on:
+  pull_request:
+    branches:
+      - main
+      - master
   push:
     branches:
       - main

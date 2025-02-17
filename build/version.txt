@@ -29,13 +29,13 @@ StringFileInfo(
   [
   StringTable(
     u'040904B0',
-    [StringStruct(u'CompanyName', u'Crazy Horse Software'),
-    StringStruct(u'FileDescription', u'Wine Cataloger'),
+    [StringStruct(u'CompanyName', u'Advanced Schema'),
+    StringStruct(u'FileDescription', u'Lintor'),
     StringStruct(u'FileVersion', u'0.0.1'),
-    StringStruct(u'InternalName', u'Wine Cataloger'),
-    StringStruct(u'LegalCopyright', u'Copyright (c) Crazy Horse Software'),
-    StringStruct(u'OriginalFilename', u'winecataloger.exe'),
-    StringStruct(u'ProductName', u'Wine Cataloger'),
+    StringStruct(u'InternalName', u'Lintor'),
+    StringStruct(u'LegalCopyright', u'Copyright (c) Advanced Schema'),
+    StringStruct(u'OriginalFilename', u'lintor.exe'),
+    StringStruct(u'ProductName', u'Lintor'),
     StringStruct(u'ProductVersion', u'0.0.1')])
   ]), 
 VarFileInfo([VarStruct(u'Translation', [1033, 1200])])
